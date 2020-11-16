@@ -4,15 +4,12 @@ local client = discordia.Client()
 local prefix = "!"
 local answers = {
 
-    -- Comando = "Resposta"
+    -- Comando = {"Resposta", "Resposta2"},
 
-    ping = "pong",
-    marco = "polo",
-    comando = "resposta",
-    nome = "Joao",
-
-
-    ["comando algo"] = "test",
+    ping = {"pong", "pong!", "pong?"},
+    ["comando composto"] = {"um", "dois"},
+    marco = {"polo"},
+    test = {"1","2","3","4","5"}
 
 
 
@@ -31,7 +28,7 @@ client:on('messageCreate', function(message)
     for command, answer in pairs(answers) do
 
         if string.lower(message.content) == prefix..command then
-            message.channel:send(answer)
+            message.channel:send(answers[command][math.random(#answers[command])])
             break
         end
 
