@@ -22,25 +22,40 @@ end)
  
 client:on('messageCreate', function(message)
 
+    local content = message.content
+    local cmd = discordia.extensions.string.split(content, " ")
 
-    -- ping
+    if cmd[1] == prefix.."avatar" then
+        local user = client:getUser(cmd[2])
+
+        if user ~= nil then
+            message:reply {
+                embed = {
+                    title = "UM TITULO",
+                    description = "**Clique [aqui]("..user:getAvatarURL().."?size=512"..") para baixar.**",
+                    image = {
+                        url = user:getAvatarURL().."?size=512"--Envia o avatar do usuario com o size 512
+                    },
+                    color = 11772249,
+
+        
+                }
+            } 
+
+        else
+            message:reply("Digite um ID válido.")
+        end
+    end
 
     for command, answer in pairs(answers) do
 
-        if string.lower(message.content) == prefix..command then
+        if string.lower(content) == prefix..command then
             message.channel:send(answers[command][math.random(#answers[command])])
             break
         end
 
     end
-
-    --
-
     
-    
-
-
-
 
 end)
  
